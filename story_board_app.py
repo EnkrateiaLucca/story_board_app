@@ -7,12 +7,6 @@ import requests
 from io import BytesIO
 import os
 
-openai_api_key = st.sidebar.text_input("Enter your OpenAI API key", type="password")
-
-if openai_api_key!="":
-    os.environ["OPENAI_API_KEY"] = openai_api_key
-
-client = OpenAI()
 
 def generate_story_board(prompt, model="dall-e-3", size="1024x1024", quality="standard", n=1):
     response = client.images.generate(
@@ -53,7 +47,10 @@ def download_image_from_url(image_url, save_path="output_story_board.png"):
 
 def visualize_image(image_path):
     st.image(image_path)
-    
+
+
+def upload_image_frame_reference():
+    pass    
 
 def main():
     st.title("StoryBoard-Maker")
@@ -87,13 +84,13 @@ def main():
         visualize_image(image_path)
 
 if __name__=="__main__":
-    main()
     
+    openai_api_key = st.sidebar.text_input("Enter your OpenAI API key", type="password")
+
+    if openai_api_key!="":
+        os.environ["OPENAI_API_KEY"] = openai_api_key
+
+        client = OpenAI()
+
+        main()
     
-      
-
-# image_path = generate_story_board(PROMPT_SAMPLE_TASK)
-
-# image_url = 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-gpLJbCQWtORw077QTyeX1IVP/user-XdioBui0vo4j6lczE6AGRrxb/img-cxe7kfKF5Cxqpft2DFfUJ0AU.png?st=2023-12-28T17%3A24%3A57Z&se=2023-12-28T19%3A24%3A57Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-12-28T16%3A30%3A21Z&ske=2023-12-29T16%3A30%3A21Z&sks=b&skv=2021-08-06&sig=bzpApvf5vIP1UVNIm1ZBafQGQW68Xje6hMspSXl/slM%3D'
-# image_path = "/Users/greatmaster/Desktop/projects/learning/output_story_board.png"
-# visualize_image(image_path)
